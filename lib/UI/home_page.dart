@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../fluro.dart';
 import 'info_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -57,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       appBar: AppBar(
         title: Text("Khavchik"),
+        backgroundColor: Colors.orange[400],
       ),
       body: Center(
         child: Column(
@@ -68,28 +70,58 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        print('Ovqat qilishni boshlash');
+                        FluroRouterClass.router.navigateTo(
+                          context,
+                          '/cookingPage',
+                        );
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        child: const Center(
-                          child: Text('Ovqat qilishni boshlash'),
+                        child: const Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Ovqat qilishni \nboshlash',
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.orange,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        color: Colors.grey,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: AssetImage('assets/cook.png'),
+                            ),
+                            color: Colors.white),
                       ),
                     ),
                   ),
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        print('Bazmu jamshid uyishtirish');
+                        FluroRouterClass.router.navigateTo(
+                          context,
+                          '/party',
+                        );
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        child: const Center(
-                          child: Text('Bazmu jamshid uyishtirish'),
+                        child: const Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Bayramona\n retseptlar',
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.orange,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        color: Colors.grey,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: AssetImage('assets/party.png'),
+                            ),
+                            color: Colors.white),
                       ),
                     ),
                   ),

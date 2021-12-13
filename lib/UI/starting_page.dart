@@ -27,14 +27,15 @@ class _StartingPage extends State<StartingPage> {
   late UpdateType updateType;
 
   List<ItemData> data = [
-    ItemData(Colors.blue, "assets/1.png", "Salom", " bu Khavchik !!!",
+    ItemData(Colors.orange, "assets/1.png", "Salom", " bu Khavchik !!!",
         "Oshxonadagi shefingiz"),
-    ItemData(Colors.deepPurpleAccent, "assets/1.png", "Siz uchun",
+    ItemData(Colors.deepPurpleAccent, "assets/analiz.png", "Siz uchun",
         "Masalliglaringizni ", "urganadi"),
-    ItemData(Colors.green, "assets/1.png", "Taomlar", "tavsiya", "qiladi "),
-    ItemData(Colors.yellow, "assets/1.png", "Sizga ",
+    ItemData(
+        Colors.green, "assets/tavsiya.png", "Taomlar", "tavsiya", "qiladi "),
+    ItemData(Colors.blue, "assets/etap.png", "Sizga ",
         "tayyorlashni etap ma etap ", "urgatadi"),
-    ItemData(Colors.red, "assets/1.png", "Och yurmang, ", "sogliqni asrang, ",
+    ItemData(Colors.red, "assets/gaz.png", "Och yurmang, ", "sogliqni asrang, ",
         "gazini BOSING !!!"),
   ];
 
@@ -95,10 +96,8 @@ class _StartingPage extends State<StartingPage> {
                         height: 400,
                         fit: BoxFit.contain,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(20.0),
-                      ),
                       Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
                             data[index].text1,

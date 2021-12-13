@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khavchik/Data/user.dart';
+import 'package:searchfield/searchfield.dart';
 
 import '../fluro.dart';
 
@@ -17,12 +18,22 @@ class _InfoPageState extends State<InfoPage> {
   final _name = TextEditingController();
   final _weight = TextEditingController();
   final _height = TextEditingController();
-  final _allergies = TextEditingController();
+  final _allergies = GlobalKey<FormState>();
+
+  List<String> allergyIngridients = [
+    'Sut',
+    'Tuhum',
+    'Anor',
+    'Yong\'oq',
+    'Ananas',
+    'Asal',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Malumot'),
+        backgroundColor: Colors.orangeAccent,
       ),
       body: Form(
         key: _keyForm,
@@ -64,16 +75,36 @@ class _InfoPageState extends State<InfoPage> {
                 validator: (value) {},
                 onSaved: (newValue) => _user.weight = newValue as double,
               ),
-              TextFormField(
-                controller: _allergies,
-                decoration: const InputDecoration(
-                    hintText: 'Allergiyangiz bor mahsulotlarni kiriting'),
-                validator: (value) {},
-                onSaved: (newValue) => _user.allergy = newValue,
+              Form(
+                key: _allergies,
+                child: SearchField(
+                  suggestions: allergyIngridients,
+                  hint: 'Allergiyangiz bor mahsulotlar',
+                  searchStyle: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black.withOpacity(0.8),
+                  ),
+                  searchInputDecoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black.withOpacity(0.8),
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red),
+                    ),
+                  ),
+                  maxSuggestionsInViewPort: 6,
+                  itemHeight: 50,
+                  onTap: (x) {
+                    print(x);
+                  },
+                ),
               ),
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.blue, primary: Colors.white),
+                    backgroundColor: Colors.orangeAccent,
+                    primary: Colors.black),
                 onPressed: () {
                   FluroRouterClass.router.navigateTo(
                     context,
