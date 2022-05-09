@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
-import 'package:khavchik/Data/ingridients.dart';
+import 'package:khavchik/Data/models/ingridients.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -63,20 +63,9 @@ class _CookingPageState extends State<CookingPage> {
   Widget build(BuildContext context) {
     double widthCards = MediaQuery.of(context).size.width / 2;
     return Scaffold(
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios_outlined,
-                ),
-              ),
-            ),
             Column(
               children: [
                 const Padding(

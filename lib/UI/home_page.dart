@@ -1,7 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:khavchik/Business/provider.dart';
+import 'package:khavchik/UI/LoginScreen/login_screen.dart';
+import 'package:khavchik/UI/cooking_page.dart';
+import 'package:khavchik/UI/party_page.dart';
+import 'package:khavchik/UI/profile/profile.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Business/constants.dart';
 import '../fluro.dart';
-import 'info_page.dart';
 
 class MyHomePage extends StatefulWidget {
   static const routeName = '/home';
@@ -12,125 +21,114 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static int _selectedIndex = 0;
+
+  final List<Widget> _pages = <Widget>[
+    CookingPage(),
+    PartyPage(),
+    Profile(),
+  ];
+  User? user = FirebaseAuth.instance.currentUser;
+  @override
+  void initState() {
+    saveUSerCredentials();
+
+    context.read<ProviderVars>().getUserData();
+  }
+
+  Future<void> saveUSerCredentials() async {
+    bool? anonim = context.read<ProviderVars>().isAnonymous;
+    if (anonim != true) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      print(user?.uid);
+      await prefs.setString(TOKEN, "${user?.uid}");
+    }
+  }
+
   bool isInfoInserted = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: SafeArea(
-          child: isInfoInserted
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 300, right: 30, left: 30),
-                  child: Column(
-                    children: const [
-                      Text(
-                        'Sizning malumotlaringiz bazada va sizga individual tavsiyalar bulmoqda',
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ],
-                  ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(top: 300, right: 30, left: 30),
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Malumotlarni kiriting va individual tavsiyaga ega buling',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InfoPage(
-                                isInfoInserted: isInfoInserted,
-                              ),
-                            ),
-                          );
-                        },
-                        child: const Text("Malumotni tuldiring"),
-                      )
-                    ],
-                  ),
+    return Consumer<ProviderVars>(
+      builder: (BuildContext context, provider, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Khavchik"),
+            backgroundColor: Colors.orange,
+            actions: [
+              _selectedIndex == 2
+                  ? IconButton(
+                      icon: const Icon(Icons.logout),
+                      onPressed: () {
+                        provider.deleteUSerCredentials();
+                        Fluttertoast.showToast(msg: 'Logged out');
+                        provider.logout();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            LoginScreen.routeName, (route) => false);
+                      },
+                    )
+                  : Container(),
+            ],
+          ),
+          body: Container(
+            child: _pages.elementAt(
+              _selectedIndex.toInt(),
+            ),
+          ),
+          bottomNavigationBar: Container(
+            width: MediaQuery.of(context).size.width * 0.2,
+            padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(50), topLeft: Radius.circular(50)),
+            ),
+            child: SizedBox(
+              height: 90,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(50.0),
+                  topRight: Radius.circular(50.0),
+                  bottomLeft: Radius.circular(50.0),
+                  bottomRight: Radius.circular(50.0),
                 ),
-        ),
-      ),
-      appBar: AppBar(
-        title: Text("Khavchik"),
-        backgroundColor: Colors.orange[400],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        FluroRouterClass.router.navigateTo(
-                          context,
-                          '/cookingPage',
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Ovqat qilishni \nboshlash',
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.orange,
-                                fontWeight: FontWeight.bold),
-                          ),
+                child: BottomNavigationBar(
+                    iconSize: 25,
+                    showUnselectedLabels: true,
+                    elevation: 0, // to get rid of the shadow
+                    currentIndex: _selectedIndex,
+                    selectedItemColor: Colors.orange,
+                    onTap: onItemTapped,
+                    backgroundColor: Colors
+                        .black, // transparent, you could use 0x44aaaaff to make it slightly less transparent with a blue hue.
+                    type: BottomNavigationBarType.fixed,
+                    unselectedItemColor: Colors.white,
+                    showSelectedLabels: false,
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.home,
                         ),
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.fitHeight,
-                              image: AssetImage('assets/cook.png'),
-                            ),
-                            color: Colors.white),
+                        label: 'Home',
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        FluroRouterClass.router.navigateTo(
-                          context,
-                          '/party',
-                        );
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Bayramona\n retseptlar',
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.orange,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.fitHeight,
-                              image: AssetImage('assets/party.png'),
-                            ),
-                            color: Colors.white),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.emoji_food_beverage),
+                        label: 'Events',
                       ),
-                    ),
-                  ),
-                ],
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.account_circle),
+                        label: 'Profile',
+                      ),
+                    ]),
               ),
-            )
-          ],
-        ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+            ),
+          ),
+        );
+      },
     );
+  }
+
+  void onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }

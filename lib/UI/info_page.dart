@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khavchik/Data/user.dart';
+import 'package:khavchik/Data/models/user.dart';
 import 'package:searchfield/searchfield.dart';
 
 import '../fluro.dart';
@@ -13,7 +13,7 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
-  late User _user;
+  late UserModel _user;
   final _keyForm = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _weight = TextEditingController();
@@ -21,12 +21,14 @@ class _InfoPageState extends State<InfoPage> {
   final _allergies = GlobalKey<FormState>();
 
   List<String> allergyIngridients = [
-    'Sut',
-    'Tuhum',
-    'Anor',
-    'Yong\'oq',
-    'Ananas',
-    'Asal',
+    "Milk",
+    "Eggs",
+    "Fish (e.g., bass, flounder, cod)",
+    "Crustacean shellfish (e.g., crab, lobster, shrimp)",
+    "Tree nuts (e.g., almonds, walnuts, pecans)",
+    "Peanuts",
+    "Wheat",
+    "Soybeans",
   ];
   @override
   Widget build(BuildContext context) {
@@ -66,14 +68,14 @@ class _InfoPageState extends State<InfoPage> {
                 decoration:
                     const InputDecoration(hintText: 'Buyingizni kiriting'),
                 validator: (value) {},
-                onSaved: (newValue) => _user.height = newValue as double,
+                onSaved: (newValue) => _user.height = newValue as int,
               ),
               TextFormField(
                 controller: _height,
                 decoration:
                     const InputDecoration(hintText: 'Vazningizni kiriting'),
                 validator: (value) {},
-                onSaved: (newValue) => _user.weight = newValue as double,
+                onSaved: (newValue) => _user.weight = newValue as int,
               ),
               Form(
                 key: _allergies,
@@ -90,7 +92,7 @@ class _InfoPageState extends State<InfoPage> {
                         color: Colors.black.withOpacity(0.8),
                       ),
                     ),
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.red),
                     ),
                   ),

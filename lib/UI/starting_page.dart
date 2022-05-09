@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'package:khavchik/Business/constants.dart';
+import 'package:khavchik/UI/home_page.dart';
 import 'package:khavchik/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemData {
   final Color color;
@@ -9,7 +12,6 @@ class ItemData {
   final String text1;
   final String text2;
   final String text3;
-
   ItemData(this.color, this.image, this.text1, this.text2, this.text3);
 }
 
@@ -27,16 +29,16 @@ class _StartingPage extends State<StartingPage> {
   late UpdateType updateType;
 
   List<ItemData> data = [
-    ItemData(Colors.orange, "assets/1.png", "Salom", " bu Khavchik !!!",
-        "Oshxonadagi shefingiz"),
-    ItemData(Colors.deepPurpleAccent, "assets/analiz.png", "Siz uchun",
-        "Masalliglaringizni ", "urganadi"),
-    ItemData(
-        Colors.green, "assets/tavsiya.png", "Taomlar", "tavsiya", "qiladi "),
-    ItemData(Colors.blue, "assets/etap.png", "Sizga ",
-        "tayyorlashni etap ma etap ", "urgatadi"),
-    ItemData(Colors.red, "assets/gaz.png", "Och yurmang, ", "sogliqni asrang, ",
-        "gazini BOSING !!!"),
+    ItemData(Colors.orange, "assets/1.png", "Hi", " it's Khavchik !!!",
+        "Your kitchen Hero"),
+    ItemData(Colors.deepPurpleAccent, "assets/analiz.png", "It analyses",
+        " products", "you have"),
+    ItemData(Colors.green, "assets/tavsiya.png", "Recommends", "optimal",
+        "solutions to cook"),
+    ItemData(Colors.blue, "assets/etap.png", "It teaches you", "step by step",
+        "cooking"),
+    ItemData(Colors.red, "assets/gaz.png", "Don't,hurt your stomach ",
+        "stay healthy, ", "GRAAAAPEEEE !!!"),
   ];
 
   @override
@@ -69,6 +71,7 @@ class _StartingPage extends State<StartingPage> {
   }
 
   static const style = TextStyle(
+    color: Colors.white,
     fontSize: 30,
     fontFamily: "Billy",
     fontWeight: FontWeight.w600,
@@ -149,12 +152,13 @@ class _StartingPage extends State<StartingPage> {
                           primary: Colors.white,
                         ),
                         onPressed: () {
+                          _storeOnboardInfo();
                           FluroRouterClass.router.navigateTo(
                             context,
-                            '/home',
+                            MyHomePage.routeName,
                           );
                         },
-                        child: const Text("Boshlash!!!"),
+                        child: const Text("START!!!"),
                       ),
                     ),
                   )
@@ -162,7 +166,7 @@ class _StartingPage extends State<StartingPage> {
                     alignment: Alignment.bottomLeft,
                     child: Padding(
                       padding: const EdgeInsets.all(25.0),
-                      child: FlatButton(
+                      child: TextButton(
                         onPressed: () {
                           liquidController.jumpToPage(
                               page: liquidController.currentPage + 1 >
@@ -170,8 +174,10 @@ class _StartingPage extends State<StartingPage> {
                                   ? 0
                                   : liquidController.currentPage + 1);
                         },
-                        child: const Text("Keyingi"),
-                        color: Colors.white.withOpacity(0.01),
+                        child: const Text("NEXT"),
+                        style: TextButton.styleFrom(
+                          primary: Colors.white.withOpacity(0.3),
+                        ),
                       ),
                     ),
                   ),
@@ -179,7 +185,10 @@ class _StartingPage extends State<StartingPage> {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(25.0),
-                child: FlatButton(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.white.withOpacity(0.3),
+                  ),
                   onPressed: () {
                     setState(() {
                       lastPage = true;
@@ -190,8 +199,7 @@ class _StartingPage extends State<StartingPage> {
                       lastPage = false;
                     });
                   },
-                  child: const Text("Ohirgi slide"),
-                  color: Colors.white.withOpacity(0.01),
+                  child: const Text("SKIP"),
                 ),
               ),
             ),
@@ -206,8 +214,15 @@ class _StartingPage extends State<StartingPage> {
       if (lpage == 4) {
         lastPage = true;
       }
-      ;
       page = lpage;
     });
+  }
+
+  _storeOnboardInfo() async {
+    print("Shared pref called");
+    int isViewed = 0;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(ISVIEWED, isViewed);
+    print(prefs.getInt(ISVIEWED));
   }
 }

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "802748802316",
+    "project_id": "khavchik-a99fa",
+    "storage_bucket": "khavchik-a99fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802748802316:android:b7edd59fa5c76b34299529",
+        "android_client_info": {
+          "package_name": "com.example.khavchik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802748802316-q6f36u17g49adkd8vsne4o7j4fqh9uc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2lPxvrJv0x8ickga4pI86FSIDxmyGeTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "802748802316-q6f36u17g49adkd8vsne4o7j4fqh9uc9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "802748802316-035bsn9k98b04vc605d2ntkc9qgdd3ir.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.khavchik"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
