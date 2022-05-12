@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:khavchik/Data/models/food.dart';
 
-import '../fluro.dart';
+import '../../Data/meal_data.dart';
+import '../../fluro.dart';
+import '../detailed_screen/detailed.dart';
 
 class AnalyzePage extends StatefulWidget {
   static const routeName = '/analyze';
 
-  const AnalyzePage({Key? key}) : super(key: key);
+  const AnalyzePage({Key? key, required this.result}) : super(key: key);
+
+  final List<FoodInfo?>? result;
 
   @override
   _AnalyzePageState createState() => _AnalyzePageState();
@@ -15,40 +20,21 @@ class _AnalyzePageState extends State<AnalyzePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: const Text('Natija'),
-        backgroundColor: Colors.orangeAccent,
-      ),
-      body: ListView(
-        children: const [
-          CustomCard(
-            name: 'Pancake',
-            poster: 'pancake.png',
-            uuid: "1",
-            similarity: '98%',
-          ),
-          CustomCard(
-            name: 'Kartoshka palov',
-            poster: '5.png',
-            uuid: "1",
-            similarity: '76%',
-          ),
-          CustomCard(
-            name: 'Svekolnik',
-            poster: '6.png',
-            uuid: "1",
-            similarity: '65%',
-          ),
-          CustomCard(
-            name: 'Nuhat shurak',
-            poster: '7.png',
-            uuid: "1",
-            similarity: '45%',
-          ),
-        ],
-      ),
-    );
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: const Text('Result of Analysis'),
+          backgroundColor: Colors.orangeAccent,
+        ),
+        body: ListView.builder(
+            itemCount: widget.result?.length,
+            itemBuilder: (BuildContext context, index) {
+              return CustomCard(
+                name: '${widget.result?[index]?.name}',
+                poster: '${widget.result?[index]?.imageLink}',
+                id: widget.result?[index]?.id,
+                similarity: widget.result?[index]?.similarProducts,
+              );
+            }));
   }
 }
 
@@ -56,15 +42,16 @@ class CustomCard extends StatelessWidget {
   const CustomCard({
     Key? key,
     required this.name,
+    required this.id,
     required this.poster,
-    required this.uuid,
     required this.similarity,
   }) : super(key: key);
 
   final String name;
+  final int? id;
   final String poster;
-  final String uuid;
-  final String similarity;
+
+  final int? similarity;
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +64,8 @@ class CustomCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 4,
-              child: Image.asset(
-                'assets/$poster',
+              child: Image.network(
+                '$poster',
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -88,8 +75,8 @@ class CustomCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    '$name',
-                    style: TextStyle(fontSize: 25),
+                    name,
+                    style: const TextStyle(fontSize: 25),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -98,11 +85,14 @@ class CustomCard extends StatelessWidget {
                     onPressed: () {
                       FluroRouterClass.router.navigateTo(
                         context,
-                        '/detailed',
+                        DetailedPage.routeName,
+                        routeSettings: RouteSettings(
+                          arguments: top35Meals[id!.toInt()],
+                        ),
                       );
                     },
                     child: const Text(
-                      'Tayyorlash',
+                      'Cook',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -113,7 +103,7 @@ class CustomCard extends StatelessWidget {
               flex: 1,
               child: Center(
                 child: Text(
-                  '$similarity masalliglar bor',
+                  '$similarity similar products you have',
                   style: TextStyle(fontSize: 30),
                 ),
               ),

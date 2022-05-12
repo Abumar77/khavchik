@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
-import 'package:khavchik/UI/LoginScreen/login_screen.dart';
-import 'package:khavchik/UI/LoginScreen/registration.dart';
+import 'package:khavchik/Data/models/food.dart';
 import 'package:khavchik/UI/SplashScreen/splash_screen.dart';
 import 'package:khavchik/UI/starting_page.dart';
-
-import 'UI/analyze_page.dart';
-import 'UI/cooking_page.dart';
-import 'UI/detailed.dart';
+import 'UI/analyze_page/analyze_page.dart';
+import 'UI/cooking_page/cooking_page.dart';
+import 'UI/detailed_screen/detailed.dart';
 import 'UI/home_page.dart';
+import 'UI/login_screen/login_screen.dart';
+import 'UI/login_screen/registration.dart';
 import 'UI/party_page.dart';
 
 class FluroRouterClass {
@@ -34,11 +34,17 @@ class FluroRouterClass {
   });
   static final Handler _analyzeHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> parameters) {
-    return const AnalyzePage();
+    final args = context?.settings?.arguments as List<FoodInfo?>?;
+    return AnalyzePage(
+      result: args,
+    );
   });
   static final Handler _detailedHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> parameters) {
-    return const DetailedPage();
+    final args = context?.settings?.arguments as FoodInfo;
+    return DetailedPage(
+      foodInfo: args,
+    );
   });
   static final Handler _splashHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> parameters) {

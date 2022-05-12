@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:khavchik/UI/starting_page.dart';
 //
-// import 'UI/LoginScreen/login_screen.dart';
+// import 'UI/login_screen/login_screen.dart';
 // import 'UI/SplashScreen/splash_screen.dart';
 //
 // class RouteGenerator {
@@ -9,8 +9,8 @@
 //     switch (settings.name) {
 //       case StartingPage.routeName:
 //         return MaterialPageRoute(builder: (_) => StartingPage());
-//       case LoginScreen.routeName:
-//         return MaterialPageRoute(builder: (_) => LoginScreen());
+//       case login_screen.routeName:
+//         return MaterialPageRoute(builder: (_) => login_screen());
 //       case SplashScreen.routeName:
 //         return MaterialPageRoute(builder: (_) => SplashScreen());
 //       // case RegistrationScreen.routeName:

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
-class Ingridient {
-  final int id;
-  final String name;
+class Ingredient {
+  int? id;
+  String? name;
+  String? quantity;
+  int? approximatePricePer100gram;
 
-  Ingridient({
-    required this.id,
-    required this.name,
+  Ingredient({
+    this.quantity,
+    this.id,
+    this.name,
+    this.approximatePricePer100gram,
   });
 }

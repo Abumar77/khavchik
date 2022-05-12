@@ -6,8 +6,8 @@ import 'package:video_player/video_player.dart';
 import '../../Business/constants.dart';
 import '../../Data/preference_service.dart';
 import '../../fluro.dart';
-import '../LoginScreen/login_screen.dart';
 import '../home_page.dart';
+import '../login_screen/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/splash-screen";

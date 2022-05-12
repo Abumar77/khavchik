@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:khavchik/Business/provider.dart';
-import 'package:khavchik/UI/LoginScreen/registration.dart';
 import 'package:provider/provider.dart';
 
-import '../LoginScreen/login_screen.dart';
+import '../login_screen/login_screen.dart';
+import '../login_screen/registration.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);

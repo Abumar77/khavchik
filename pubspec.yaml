@@ -37,6 +37,8 @@ dependencies:
   firebase_core: ^1.13.1
   fluttertoast: ^8.0.9
   toggle_switch: ^2.0.1
+  url_launcher: ^6.1.1
+  
 
 
 

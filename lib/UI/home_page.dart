@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khavchik/Business/provider.dart';
-import 'package:khavchik/UI/LoginScreen/login_screen.dart';
-import 'package:khavchik/UI/cooking_page.dart';
+import 'package:khavchik/UI/cook/cook_screen.dart';
+import 'package:khavchik/UI/cooking_page/cooking_page.dart';
 import 'package:khavchik/UI/party_page.dart';
 import 'package:khavchik/UI/profile/profile.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Business/constants.dart';
 import '../fluro.dart';
+import 'login_screen/login_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   static const routeName = '/home';
@@ -25,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _pages = <Widget>[
     CookingPage(),
+    CookScreen(),
     PartyPage(),
     Profile(),
   ];
@@ -52,10 +54,18 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context, provider, child) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Fluttertoast.showToast(
+                    msg: 'This function is in process of development');
+              },
+            ),
+            automaticallyImplyLeading: false,
             title: Text("Khavchik"),
             backgroundColor: Colors.orange,
             actions: [
-              _selectedIndex == 2
+              _selectedIndex == 3
                   ? IconButton(
                       icon: const Icon(Icons.logout),
                       onPressed: () {
@@ -66,7 +76,26 @@ class _MyHomePageState extends State<MyHomePage> {
                             LoginScreen.routeName, (route) => false);
                       },
                     )
-                  : Container(),
+                  : Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.explore),
+                          onPressed: () {
+                            Fluttertoast.showToast(
+                                msg:
+                                    'This function is in process of development');
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.notifications),
+                          onPressed: () {
+                            Fluttertoast.showToast(
+                                msg:
+                                    'This function is in process of development');
+                          },
+                        )
+                      ],
+                    ),
             ],
           ),
           body: Container(
@@ -108,6 +137,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           Icons.home,
                         ),
                         label: 'Home',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.add_box,
+                        ),
+                        label: 'Cook!!!',
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.emoji_food_beverage),
