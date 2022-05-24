@@ -87,7 +87,7 @@ class Profile extends StatelessWidget {
                                     Text(
                                       '${provider.loggedInUser?.name}',
                                       style: const TextStyle(
-                                        fontSize: 35,
+                                        fontSize: 25,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
@@ -96,7 +96,7 @@ class Profile extends StatelessWidget {
                                       '${provider.loggedInUser?.email}',
                                       style: const TextStyle(
                                         color: Colors.white,
-                                        fontSize: 25,
+                                        fontSize: 19,
                                       ),
                                     ),
                                   ],

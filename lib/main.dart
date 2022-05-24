@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      ), //isViewed != 0 ? '/' :
-      initialRoute: "/splash-screen",
+      ), //
+      initialRoute: isViewed != 0 ? '/' : "/splash-screen",
       onGenerateRoute: FluroRouterClass.router.generator,
     );
   }

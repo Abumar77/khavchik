@@ -169,7 +169,7 @@ class _CookingPageState extends State<CookingPage> {
                     ),
                     border: Border.all(color: Colors.black)),
                 width: MediaQuery.of(context).size.width - 30,
-                height: 150,
+                height: 200,
                 child: Row(
                   children: [
                     const Padding(
@@ -185,7 +185,7 @@ class _CookingPageState extends State<CookingPage> {
                       children: [
                         const Padding(
                           padding:
-                              EdgeInsets.only(bottom: 8.0, right: 130, top: 10),
+                              EdgeInsets.only(bottom: 18.0, right: 90, top: 10),
                           child: Text(
                             "Tashkent Plov",
                             style: TextStyle(
@@ -193,8 +193,7 @@ class _CookingPageState extends State<CookingPage> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.all(8),
-                          width: MediaQuery.of(context).size.width * .6,
+                          width: MediaQuery.of(context).size.width * .5,
                           child: const Text(
                               "Pilaf is perhaps one of the most delicious dishes of our cuisine. Not a single event can do without pilaf, so every UZBEk should be able to cook it."),
                         )

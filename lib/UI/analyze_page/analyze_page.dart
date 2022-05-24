@@ -29,6 +29,7 @@ class _AnalyzePageState extends State<AnalyzePage> {
             itemCount: widget.result?.length,
             itemBuilder: (BuildContext context, index) {
               return CustomCard(
+                foodInfo: widget.result?[index],
                 name: '${widget.result?[index]?.name}',
                 poster: '${widget.result?[index]?.imageLink}',
                 id: widget.result?[index]?.id,
@@ -45,8 +46,10 @@ class CustomCard extends StatelessWidget {
     required this.id,
     required this.poster,
     required this.similarity,
+    required this.foodInfo,
   }) : super(key: key);
 
+  final FoodInfo? foodInfo;
   final String name;
   final int? id;
   final String poster;
@@ -74,9 +77,11 @@ class CustomCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    name,
-                    style: const TextStyle(fontSize: 25),
+                  Container(
+                    child: Text(
+                      name,
+                      style: const TextStyle(fontSize: 25),
+                    ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -87,7 +92,7 @@ class CustomCard extends StatelessWidget {
                         context,
                         DetailedPage.routeName,
                         routeSettings: RouteSettings(
-                          arguments: top35Meals[id!.toInt()],
+                          arguments: foodInfo,
                         ),
                       );
                     },
@@ -104,7 +109,7 @@ class CustomCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   '$similarity similar products you have',
-                  style: TextStyle(fontSize: 30),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
             ),

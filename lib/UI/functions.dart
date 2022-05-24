@@ -6,12 +6,26 @@ import 'package:khavchik/UI/analyze_page/analyze_page.dart';
 import '../Data/models/ingridients.dart';
 import '../fluro.dart';
 
+bubbleSort(List<FoodInfo?>? array) {
+  int lengthOfArray = array!.length;
+  for (int i = 0; i < lengthOfArray - 1; i++) {
+    for (int j = 0; j < lengthOfArray - i - 1; j++) {
+      if (array[j]!.similarProducts < array[j + 1]!.similarProducts) {
+        FoodInfo? temp = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+      }
+    }
+  }
+  return (array);
+}
+
 void analysisFunction(
     {List<Ingredient?>? userInput,
     int? userTime,
     required BuildContext context}) {
   List<FoodInfo?>? output = top35Meals;
-  List<Ingredient?>? finalOutput = [];
+  List<FoodInfo?>? finalOutput;
 
   for (int s = 0; s <= userInput!.length - 1; s++) {
     for (int i = 0; i <= output.length - 1; i++) {
@@ -24,11 +38,12 @@ void analysisFunction(
       }
     }
   }
+  finalOutput = bubbleSort(output);
   FluroRouterClass.router.navigateTo(
     context,
     AnalyzePage.routeName,
     routeSettings: RouteSettings(
-      arguments: output,
+      arguments: finalOutput,
     ),
   );
 }
